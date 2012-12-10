@@ -314,9 +314,9 @@ obj/machinery/atmospherics/valve
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if (!istype(W, /obj/item/weapon/wrench))
 			return ..()
-		if (istype(src, /obj/machinery/atmospherics/valve/digital))
-			user << "\red You cannot unwrench this [src], it's too complicated."
-			return 1
+		//if (istype(src, /obj/machinery/atmospherics/valve/digital))
+		//	user << "\red You cannot unwrench this [src], it's too complicated."
+		//	return 1
 		var/turf/T = src.loc
 		if (level==1 && isturf(T) && T.intact)
 			user << "\red You must remove the plating first."
