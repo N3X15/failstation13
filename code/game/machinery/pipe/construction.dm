@@ -60,10 +60,10 @@ Buildable meters
 			src.pipe_type = PIPE_MANIFOLD
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_pump))
 			src.pipe_type = PIPE_UVENT
-		else if(istype(make_from, /obj/machinery/atmospherics/valve))
-			src.pipe_type = PIPE_MVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/valve/digital))
 			src.pipe_type = PIPE_DVALVE
+		else if(istype(make_from, /obj/machinery/atmospherics/valve))
+			src.pipe_type = PIPE_MVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/pump))
 			src.pipe_type = PIPE_PUMP
 		else if(istype(make_from, /obj/machinery/atmospherics/trinary/filter))
@@ -130,8 +130,12 @@ Buildable meters
 		"passivegate", \
 		"volumepump", \
 		"heunary", \
-		"filter-control", \
+		"valve0nopower", \
 	)
+	if(pipe_type==PIPE_DVALVE) // Nothing there for d-valves.
+		icon = 'icons/obj/atmospherics/digital_valve.dmi'
+	else
+		icon = 'icons/obj/pipe-item.dmi'
 	icon_state = islist[pipe_type + 1]
 
 //called when a turf is attacked with a pipe item

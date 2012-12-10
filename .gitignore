@@ -9,5 +9,15 @@ tgstation.rsc
 tgstation.rsc.lk
 *.lk
 *.patch
-/code/modules/mob/dead/observer/*.bak
-/data/logs/2012/12-December/*.log
+*.bak
+/data/logs
+/config/forumdbconfig.txt
+/config/game_options.txt
+/config/jobs.txt
+/config/motd.txt
+/config/rules.html
+/config/access levels.txt
+/config/admin_ranks.txt
+/config/admins.txt
+/config/config.txt
+/config/dbconfig.txt

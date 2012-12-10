@@ -617,3 +617,27 @@
 	containertype = /obj/structure/closet/crate
 	containername = "Contraband crate"
 	contraband = 1
+
+// Shit for atmos replacement parts
+/datum/supply_packs/pipedispenser
+	name = "Pipe Dispenser Parts"
+	contains = list(/obj/item/weapon/circuitboard/pipedispenser,
+				    /obj/item/weapon/circuitboard/dpipedispenser,
+				    )
+	cost = 20
+	containertype = /obj/structure/closet/crate
+	containername = "Pipe Dispenser crate"
+
+/datum/supply_packs/replacementair
+	name = "Replacement Gasses"
+	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen,
+	                /obj/machinery/portable_atmospherics/canister/oxygen,
+	                /obj/machinery/portable_atmospherics/canister/nitrogen,
+	                /obj/machinery/portable_atmospherics/canister/nitrogen,
+	                /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+	                /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+	                /obj/machinery/portable_atmospherics/canister/toxins,
+	                /obj/machinery/portable_atmospherics/canister/toxins,
+	               )
+	cost = 30
+	containername = "Atmospherics Supply crate"

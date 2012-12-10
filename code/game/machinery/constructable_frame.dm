@@ -323,5 +323,15 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
 
 
+/obj/item/weapon/circuitboard/pipedispenser
+	name = "Circuit board (Gas Pipe Dispenser)"
+	build_path = "/obj/machinery/pipedispenser"
+	board_type = "machine"
+	origin_tech = "engineering=2"
 
 
+/obj/item/weapon/circuitboard/dpipedispenser
+	name = "Circuit board (Disposal Pipe Dispenser)"
+	build_path = "/obj/machinery/pipedispenser/disposal"
+	board_type = "machine"
+	origin_tech = "engineering=2"
