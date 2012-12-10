@@ -1,0 +1,13 @@
+TO_DO.txt
+goonstation.dmb
+png_icons
+tgstation.dmb
+tgstation.dyn.rsc
+tgstation.int
+tgstation.lk
+tgstation.rsc
+tgstation.rsc.lk
+*.lk
+*.patch
+/code/modules/mob/dead/observer/*.bak
+/data/logs/2012/12-December/*.log
