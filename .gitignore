@@ -21,3 +21,10 @@ tgstation.rsc.lk
 /config/admins.txt
 /config/config.txt
 /config/dbconfig.txt
+/data/player_saves
+/data/job_full.ban
+/data/banlist.bdb
+/data/job_fullnew.bdb
+/data/memo.sav
+/data/player_notes.sav
+/data/ban_unban_log.txt
