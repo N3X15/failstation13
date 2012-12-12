@@ -24,3 +24,5 @@ Major changes for this version involve making most many pre-built atmospherics o
 
 * *BREAKING CHANGE:* Configuration renamed to *.dist so it doesn't interfere with local configuration. BACK UP YOUR SHIT.
 * Digital Valve can be disassembled with a wrench, and can now be ordered at the Pipe Dispenser. Gives borgs and AIs more options, and atmos techs more opportunities to blamed for everything.
+* Supply shuttle now offers replacement gasses and pipe dispenser parts.
+* Pipe dispensers can now be constructed like any other machine, given pipe dispenser circuit boards.
