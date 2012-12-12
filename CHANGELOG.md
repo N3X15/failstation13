@@ -9,16 +9,16 @@ Version 0.0.1
 TODO:
 * vending machines are indestructable and irreplacable
 * impossible to replace:
-** display cases
-** glass fireaxe cases
-** hydroponics trays
-** gasses
-** newscasters
-** tank transfer valves (by design, though)
-** proximity sensors
-** igniters
-** timers
-** cameras
+ * display cases
+ * glass fireaxe cases
+ * hydroponics trays
+ * gasses
+ * newscasters
+ * tank transfer valves (by design, though)
+ * proximity sensors
+ * igniters
+ * timers
+ * cameras
 
 Major changes for this version involve making most many pre-built atmospherics objects (and a few others) destructable and/or rebuildable for super-extended rounds, as planned for /fail/station.
 
