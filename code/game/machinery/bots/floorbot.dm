@@ -214,7 +214,10 @@
 					break
 		if((!src.target || src.target == null ) && src.improvefloors)
 			for (var/turf/simulated/floor/F in view(7,src))
-				if(!(F in floorbottargets) && F != src.oldtarget && F.icon_state == "Floor1" && !(istype(F, /turf/simulated/floor/plating)))
+			    // So, what the dick are we doing, here?
+			    // ORIGINAL: if(!(F in floorbottargets) && F != src.oldtarget && F.icon_state == "Floor1" && !(istype(F, /turf/simulated/floor/plating)))
+			    // Using new erro flags:
+				if(!(F in floorbottargets) && F != src.oldtarget && F.is_plating())
 					src.oldtarget = F
 					src.target = F
 					break
@@ -261,9 +264,10 @@
 			src.eattile(src.target)
 		else if(istype(src.target, /obj/item/stack/sheet/metal))
 			src.maketile(src.target)
-		else if(istype(src.target, /turf/) && emagged < 2)
+		//else if(istype(src.target, /turf/) && emagged < 2)
+		else if(src.target.is_plating() && emagged < 2)
 			repair(src.target)
-		else if(emagged == 2 && istype(src.target,/turf/simulated/floor))
+		else if(src.target.is_plating() && emagged == 2)
 			var/turf/simulated/floor/F = src.target
 			src.anchored = 1
 			src.repairing = 1
@@ -308,7 +312,8 @@
 		visible_message("\red [src] begins to improve the floor.")
 		src.repairing = 1
 		spawn(50)
-			src.loc.icon_state = "floor"
+			var/turf/simulated/floor/F = src.loc
+			F.make_plasteel_floor()
 			src.repairing = 0
 			src.amount -= 1
 			src.updateicon()
