@@ -12,11 +12,9 @@ TODO:
  * display cases
  * glass fireaxe cases
  * hydroponics trays
- * gasses
  * newscasters
  * tank transfer valves (by design, though)
  * proximity sensors
- * igniters
  * timers
  * cameras
 
@@ -26,3 +24,6 @@ Major changes for this version involve making most many pre-built atmospherics o
 * Digital Valve can be disassembled with a wrench, and can now be ordered at the Pipe Dispenser. Gives borgs and AIs more options, and atmos techs more opportunities to blamed for everything.
 * Supply shuttle now offers replacement gasses and pipe dispenser parts.
 * Pipe dispensers can now be constructed like any other machine, given pipe dispenser circuit boards.
+
+Fixes:
+* Floorbot now operates correctly.
