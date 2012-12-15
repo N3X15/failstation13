@@ -164,6 +164,26 @@
 					targetdirection = null
 			src.updateUsrDialog()
 
+/obj/machinery/bot/floorbot/proc/is_obj_valid_target(var/atom/T,var/list/floorbottargets)
+	return !(T in floorbottargets) && T != src.oldtarget && !(istype(T.loc, /turf/simulated/wall))
+
+/obj/machinery/bot/floorbot/proc/hunt_for_tiles(var/list/shit_in_view, var/list/floorbottargets)
+	for(var/obj/item/stack/tile/plasteel/T in shit_in_view)
+		if(src.is_obj_valid_target(T,floorbottargets))
+			src.oldtarget = T
+			src.target = T
+			return
+
+/obj/machinery/bot/floorbot/proc/hunt_for_metal(var/list/shit_in_view, var/list/floorbottargets)
+	for(var/obj/item/stack/sheet/metal/M in shit_in_view)
+		if(src.is_obj_valid_target(M) && M.amount == 1)
+			src.oldtarget = M
+			src.target = M
+			return
+
+/obj/machinery/bot/floorbot/proc/have_target()
+	return (src.target != null)
+
 /obj/machinery/bot/floorbot/process()
 	set background = 1
 
@@ -172,30 +192,25 @@
 	if(src.repairing)
 		return
 	var/list/floorbottargets = list()
-	if(src.amount <= 0 && ((src.target == null) || !src.target))
+
+	// Needed because we used to look this up 15 goddamn times per process. - Nexypoo
+	var/list/shitICanSee = view(7, src)
+
+	if(src.amount <= 0 && !src.have_target())
 		if(src.eattiles)
-			for(var/obj/item/stack/tile/plasteel/T in view(7, src))
-				if(T != src.oldtarget && !(target in floorbottargets))
-					src.oldtarget = T
-					src.target = T
-					break
-		if(src.target == null || !src.target)
-			if(src.maketiles)
-				if(src.target == null || !src.target)
-					for(var/obj/item/stack/sheet/metal/M in view(7, src))
-						if(!(M in floorbottargets) && M != src.oldtarget && M.amount == 1 && !(istype(M.loc, /turf/simulated/wall)))
-							src.oldtarget = M
-							src.target = M
-							break
+			src.hunt_for_tiles(shitICanSee, floorbottargets)
+		if(src.maketiles && !src.have_target())
+			src.hunt_for_metal(shitICanSee, floorbottargets)
 		else
 			return
+
 	if(prob(5))
 		visible_message("[src] makes an excited booping beeping sound!")
 
-	if((!src.target || src.target == null) && emagged < 2)
+	if(!src.have_target() && emagged < 2)
 		if(targetdirection != null)
 			/*
-			for (var/turf/space/D in view(7,src))
+			for (var/turf/space/D in shitICanSee)
 				if(!(D in floorbottargets) && D != src.oldtarget)			// Added for bridging mode -- TLE
 					if(get_dir(src, D) == targetdirection)
 						src.oldtarget = D
@@ -206,37 +221,31 @@
 			if(istype(T, /turf/space))
 				src.oldtarget = T
 				src.target = T
-		if(!src.target || src.target == null)
-			for (var/turf/space/D in view(7,src))
+		if(!src.have_target())
+			for (var/turf/space/D in shitICanSee)
 				if(!(D in floorbottargets) && D != src.oldtarget && (D.loc.name != "Space"))
 					src.oldtarget = D
 					src.target = D
 					break
 		if((!src.target || src.target == null ) && src.improvefloors)
-			for (var/turf/simulated/floor/F in view(7,src))
+			for (var/turf/simulated/floor/F in shitICanSee)
 			    // So, what the dick are we doing, here?
 			    // ORIGINAL: if(!(F in floorbottargets) && F != src.oldtarget && F.icon_state == "Floor1" && !(istype(F, /turf/simulated/floor/plating)))
 			    // Using new erro flags:
-				if(!(F in floorbottargets) && F != src.oldtarget && F.is_plating())
+				if(!(F in floorbottargets) && F != src.oldtarget && F.is_plating() && !(istype(F, /turf/simulated/wall)))
 					src.oldtarget = F
 					src.target = F
 					break
-		if((!src.target || src.target == null) && src.eattiles)
-			for(var/obj/item/stack/tile/plasteel/T in view(7, src))
-				if(!(T in floorbottargets) && T != src.oldtarget)
-					src.oldtarget = T
-					src.target = T
-					break
 
-	if((!src.target || src.target == null) && emagged == 2)
-		if(!src.target || src.target == null)
-			for (var/turf/simulated/floor/D in view(7,src))
-				if(!(D in floorbottargets) && D != src.oldtarget && D.floor_tile)
-					src.oldtarget = D
-					src.target = D
-					break
+	if(!src.have_target() && emagged == 2)
+		for (var/turf/simulated/floor/D in shitICanSee)
+			//if(!(D in floorbottargets) && D != src.oldtarget && D.floor_tile)
+			if(!(D in floorbottargets) && D != src.oldtarget && D.is_plasteel_floor())
+				src.oldtarget = D
+				src.target = D
+				break
 
-	if(!src.target || src.target == null)
+	if(!src.have_target())
 		if(src.loc != src.oldloc)
 			src.oldtarget = null
 		return
@@ -265,7 +274,7 @@
 		else if(istype(src.target, /obj/item/stack/sheet/metal))
 			src.maketile(src.target)
 		//else if(istype(src.target, /turf/) && emagged < 2)
-		else if(src.target.is_plating() && emagged < 2)
+		else if((src.target.is_plating() || istype(src.target,/turf/space/)) && emagged < 2)
 			repair(src.target)
 		else if(src.target.is_plating() && emagged == 2)
 			var/turf/simulated/floor/F = src.target
@@ -285,7 +294,6 @@
 		return
 
 	src.oldloc = src.loc
-
 
 /obj/machinery/bot/floorbot/proc/repair(var/turf/target)
 	if(istype(target, /turf/space/))
